@@ -1,0 +1,25 @@
+div.title{
+    width:50%;
+    margin:auto;
+}
+div.buttonList{
+    list-style-type:none;
+    width:50%;
+    margin:auto;
+}
+button.home{
+    float:left;
+    font:20pt bolder;
+    padding:3px 3px 3px 3px;
+    text-align:center;
+    border:1px solid darkslategrey;
+    -webkit-transition: 0.3s;
+    -moz-transition:  0.3s;
+    -o-transition:  0.3s;
+    transition:  0.3s;
+}
+button.home:hover{
+    background-color:darkgrey;
+    color:white;
+    box-shadow:0 5px 5px dimgrey;
+}
