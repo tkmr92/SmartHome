@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Smart Home - Home</title>
+    <link rel="stylesheet" href="styles/index.css" />
+    <script src="scripts/common.js"></script>
+    <script src="scripts/index.js"></script>
 </head>
 <body>
-    <H1 id="welcome">Welcome to your SmartHome</H1>
-    <h3 id="select">Select what you would like to do:</h3>
-    <ul class="list">
-        <li class="selectable">ToDo</li>
-        <li class="selectable">Schedule</li>
-        <li class="selectable">Shopping</li>
-    </ul>
+    <div class="title">
+        <H1>Welcome to your SmartHome</H1>
+        <p id="CurrentUser"></p>
+    </div>
+        <div class="buttonList">
+            <button class="home" onclick="toDoClick()">To-Do</button>
+            <button class="home" onclick="scheduleClick()">Schedule</button>
+            <button class="home" onclick="shoppingClick()">Shopping</button>
+            <a href="changeuser.html"><button class="home">Change User</button></a>
+        </div>
 </body>
 </html>
