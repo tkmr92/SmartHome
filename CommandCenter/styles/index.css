@@ -1,12 +1,3 @@
-div.title{
-    width:50%;
-    margin:auto;
-}
-div.buttonList{
-    list-style-type:none;
-    width:50%;
-    margin:auto;
-}
 button.home{
     float:left;
     font:20pt bolder;

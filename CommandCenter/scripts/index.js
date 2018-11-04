@@ -10,4 +10,3 @@ function scheduleClick(){
 function shoppingClick(){
 
 }
-function
