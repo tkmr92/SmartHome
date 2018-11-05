@@ -5,8 +5,26 @@
     <title>SmartHome - To Do</title>
     <link rel="stylesheet" href="styles/common.css" />
     <script src="scripts/common.js"></script>
+    <script src="scripts/todo.js"></script>
 </head>
-<body>
+<body onload="pageLoaded()">
+    <div class="title">
+        <h1>Title Here</h1>
+    </div>
+    <div class="navBar">
+        <a href="todo.html"><button class="home">To-Do</button></a>
+        <a href="schedule.html"><button class="home">Schedule</button></a>
+        <a href="shopping.html"><button class="home">Shopping</button></a>
+        <a href="changeuser.html"><button class="home">Change User</button></a>
+    </div>
+    <div class="hButtonList" id="toDoNav">
+        <button id="firstItemButton">View First Item</button>
+        <button id="nextItemButton">View Next Item</button>
+        <button id="allItemsButton">View All Items (List Format)</button>
+        <button id="newItemButton" onclick="addNewTask()">Add New Item</button>
+    </div>
+    <div id="tasks">
+    </div>
 
 </body>
 </html>
