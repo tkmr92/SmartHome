@@ -1,20 +1,23 @@
-let usersDiv = document.getElementById("userlist");
 let usersURL = "http://smarthome/data/users.json";
 let usersRequest = new XMLHttpRequest();
 
+
 function changeUser(){
+    let usersDiv = document.getElementById("userList");
     usersDiv.innerHTML = "";
     usersRequest.open('GET', usersURL);
+    usersRequest.responseType = "json";
     usersRequest.send();
     usersRequest.onload = function() {
         let usersList = usersRequest.response;
         populateUsers(usersList);
     };
 }
-function populateUsers(jsonArray){
-    for(let i = 0; i < jsonArray.length; i++){
+function populateUsers(myData){
+    let userList = myData['users'];
+    for(let i = 0; i < userList.length; i++){
         let newButton = document.createElement("button");
-        newButton.insertAdjacentHTML("afterbegin", jsonArray[i]);
+        newButton.insertAdjacentHTML("afterbegin", jsonArrayp[i]);
         usersDiv.insertAdjacentHTML("beforeend", newButton)
     }
 
