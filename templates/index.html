@@ -13,11 +13,10 @@
         <H1>Welcome to your SmartHome</H1>
         <p id="CurrentUser"></p>
     </div>
-    <div class="buttonList">
-        <a href="todo.html"><button class="home">To-Do</button></a>
-        <a href="schedule.html"><button class="home">Schedule</button></a>
-        <a href="shopping.html"><button class="home">Shopping</button></a>
-        <a href="changeuser.html"><button class="home">Change User</button></a>
-    </div>
+    <ul id="navbar">
+        {% for item in nav %}
+            <li><a href="/{{item}}">{{item}}</a></li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
