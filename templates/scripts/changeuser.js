@@ -17,7 +17,7 @@ function populateUsers(myData){
     let userList = myData['users'];
     for(let i = 0; i < userList.length; i++){
         let newButton = document.createElement("button");
-        newButton.insertAdjacentHTML("afterbegin", jsonArrayp[i]);
+        newButton.insertAdjacentHTML("afterbegin", myData[i]);
         usersDiv.insertAdjacentHTML("beforeend", newButton)
     }
 
