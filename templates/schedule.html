@@ -1,12 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SmartHome - Your Schedule</title>
-    <link rel="stylesheet" href="styles/common.css" />
-    <script src="scripts/common.js"></script>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "base.html" %}
+<!-- head -->
+{% block head %}
+    <script src="scripts/schedule.js"></script>
+{% endblock %}
+{% block title %}Your Schedule{% endblock %}
+<!-- /head -->
+<!-- body -->
+{% block header %}
+    <div class="title">
+        <H1>Here is your schedule</H1>
+        <p id="CurrentUser"></p>
+    </div>
+{% endblock %}
+{% block content %}
+{% endblock %}
+<!-- /body -->

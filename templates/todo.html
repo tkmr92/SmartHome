@@ -1,29 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SmartHome - To Do</title>
-    <link rel="stylesheet" href="styles/common.css" />
-    <script src="scripts/common.js"></script>
+{% extends "base.html" %}
+<!-- head -->
+{% block head %}
     <script src="scripts/todo.js"></script>
-</head>
-<body onload="pageLoaded()">
+{% endblock %}
+{% block title %}To Do {% endblock %}
+<!-- /head -->
+<!-- body -->
+{% block header %}
     <div class="title">
-        <h1>Title Here</h1>
+        <H1>Today's To Do List</H1>
+        <p id="CurrentUser"></p>
     </div>
-    <ul id="navbar">
-        {% for item in nav %}
-            <li><a href="/{{item}}">{{item}}</a></li>
-        {% endfor %}
-    </ul>
-    <div class="hButtonList" id="toDoNav">
-        <button id="firstItemButton">View First Item</button>
-        <button id="nextItemButton">View Next Item</button>
-        <button id="allItemsButton">View All Items (List Format)</button>
-        <button id="newItemButton" onclick="addNewTask()">Add New Item</button>
-    </div>
-    <div id="tasks">
-    </div>
-
-</body>
-</html>
+{% endblock %}
+{% block content %}
+{% endblock %}
+<!-- /body -->

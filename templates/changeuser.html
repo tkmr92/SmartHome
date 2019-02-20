@@ -1,28 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Smart Home - Change User</title>
-    <link rel="stylesheet" href="styles/common.css" />
-    <script src="scripts/common.js"></script>
+{% extends "base.html" %}
+<!-- head -->
+{% block head %}
     <script src="scripts/changeuser.js"></script>
-</head>
-    <body onload="populateUsers()">
-        <div class="title">
-            <h1>User Selection</h1>
-        </div>
-        <div class="hButtonList">
-            <a href="todo"><button class="home">To-Do</button></a>
-            <a href="schedule"><button class="home">Schedule</button></a>
-            <a href="shopping"><button class="home">Shopping</button></a>
-            <a href="changeuser"><button class="home">Change User</button></a>
-        </div>
-        <div class="content">
-            <h3 class="contentHeader">Select an action:</h3>
-            <div class="hButtonList" id="userList">
-                <button onclick="changeUser()">Change User</button>
-                <button onclick="newUser()">Create New User</button>
-            </div>
-        </div>
-    </body>
-</html>
+{% endblock %}
+{% block title %}Switch Users{% endblock %}
+<!-- /head -->
+<!-- body -->
+{% block header %}
+    <div class="title">
+        <H1>You are currently logged in as</H1>
+        <p id="CurrentUser"></p>
+    </div>
+{% endblock %}
+{% block content %}
+{% endblock %}
+<!-- /body -->
