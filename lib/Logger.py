@@ -1,6 +1,6 @@
 import logging
 
-
+# -- TODO: Define loggers, handlers and filters. Appropriately implement logging module
 class Logger:
     def __init__(self, loggername, loglevel):
         self.name = loggername
