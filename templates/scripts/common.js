@@ -1,2 +1,0 @@
-const interact = require('interactjs');
-

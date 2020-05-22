@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles/common.css" />
-    <script src="scripts/common.js"></script>
-    <title>{% block title %}{% endblock %} : SmartHome</title>
-    {% block head %}{% endblock %}
-</head>
-<body>
-    {% block header %}{% endblock %}
-    <ul id="navbar">
-        {% for item in nav %}
-            <li><a href="/{{item}}">{{item}}</a></li>
-        {% endfor %}
-    </ul>
-    {% block content %}{% endblock %}}
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="static/styles/common.css" />
+        <script src="static/scripts/common.js"></script>
+        <title>{% block title %}{% endblock %} : SmartHome</title>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        {% block header %}{% endblock %}
+        <p>Currently logged in as: {{user}}</p>
+        <ul id="navbar">
+            {% for key in nav %}
+                <li><a href="/{{nav[key]}}">{{key}}</a></li>
+            {% endfor %}
+        </ul>
+        {% block content %}{% endblock %}
+    </body>
 </html>

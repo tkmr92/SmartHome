@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 <!-- head -->
 {% block head %}
-    <script src="scripts/changeuser.js"></script>
+    <!-- <script src="static/scripts/changeuser.js"></script> -->
 {% endblock %}
 {% block title %}Switch Users{% endblock %}
 <!-- /head -->
 <!-- body -->
 {% block header %}
-    <div class="title">
-        <H1>You are currently logged in as</H1>
-        <p id="CurrentUser"></p>
-    </div>
 {% endblock %}
 {% block content %}
+    <ul id="UserList">
+            {% for item in userlist %}
+        <li id="UserListButton"><form method="post"><input type=submit value="{{item}}" name=username ></form></li>
+            {% endfor %}
+    </ul>
 {% endblock %}
 <!-- /body -->

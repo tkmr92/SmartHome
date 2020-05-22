@@ -1,4 +1,5 @@
-let usersURL = "http://smarthome/data/users.json";
+/*
+let usersURL = "http://smarthome/data/users";
 let usersRequest = new XMLHttpRequest();
 
 
@@ -24,4 +25,4 @@ function populateUsers(myData){
 }
 function newUser(){
 
-}
+}*/
