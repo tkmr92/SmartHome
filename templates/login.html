@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="static/styles/common.css" />
     <script src="static/scripts/common.js"></script>
+    <script src="static/scripts/login.js"></script>
     <title>Login : Smarthome</title>
 </head>
 <body>
-    <h3>Please Log in</h3>
-    <form method="post">
-        <p><input type=text name=username></p>
-        <p><input type=submit value=Login></p>
-    </form>
+    <div class="login">
+        <h3>Please Log in</h3>
+        <form method="post">
+            <input type=text name=username>
+            <input type=submit value=Login>
+        </form>
+        <a href="login/new"><button class="newUserButton">Create New User</button></a>
+    </div>
 </body>
 </html>
