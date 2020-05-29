@@ -26,15 +26,23 @@ def get_users():
     return userlist
 
 
-def add_user(username, password):
+def add_user(username, password=None):
     mongoclient.setdatabase('smarthome-db')
     mongoclient.setcollection('People')
+    if password is None:
+        data = {
+            'name': username
+        }
+        mongoclient.setdocument(data)
+        mongoclient.insertdocument()
+        return
     data = {
         'name': username,
         'password': password
     }
     mongoclient.setdocument(data)
     mongoclient.insertdocument()
+    return
 
 # Vars #
 
@@ -68,10 +76,15 @@ def login(nav=navbar):
 @app.route('/login/new',  methods=['GET', 'POST'])
 def newuser(nav=navbar):
     if flask.request.method == 'POST':
+        if flask.request.form['password']:
+            username = flask.request.form['username']
+            password = flask.request.form['password']
+            password = password_hasher.hash(password)
+            add_user(username, password)
+            flask.session['username'] = username
+            return flask.redirect(flask.url_for('index'))
         username = flask.request.form['username']
-        password = flask.request.form['password']
-        password = password_hasher.hash(password)
-        add_user(username, password)
+        add_user(username)
         flask.session['username'] = username
         return flask.redirect(flask.url_for('index'))
     return flask.render_template('new_user.html')
