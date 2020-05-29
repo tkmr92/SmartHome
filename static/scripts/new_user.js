@@ -32,6 +32,6 @@ function addPasswordField() {
     form.appendChild(passwordButton)
     document.querySelector('button#noAuth').remove()
     form.insertBefore(passwordField, passwordButton)
-    passwordField.outerHTML = "<input type=text name=password value=Password>"
+    passwordField.outerHTML = "<input type=text name=password placeholder=Password>"
     passwordButton.outerHTML = "<input type=submit value='Create New User'>"
 }
