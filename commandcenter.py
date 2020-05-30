@@ -65,8 +65,10 @@ def index(nav=navbar):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login(nav=navbar):
+    get_users()
     if flask.request.method == 'POST':
         flask.session['username'] = flask.request.form['username']
+        flask.session['password'] = flask.request.form['password']
         if flask.session['username'] in userList:
             return flask.redirect(flask.url_for('index'))
         flask.redirect(flask.url_for('/login/new/<newuser>'))
@@ -76,15 +78,14 @@ def login(nav=navbar):
 @app.route('/login/new',  methods=['GET', 'POST'])
 def newuser(nav=navbar):
     if flask.request.method == 'POST':
-        if flask.request.form['password']:
-            username = flask.request.form['username']
-            password = flask.request.form['password']
-            password = password_hasher.hash(password)
-            add_user(username, password)
+        username = flask.request.form['username']
+        password = flask.request.form['password']
+        if password is '':
+            add_user(username)
             flask.session['username'] = username
             return flask.redirect(flask.url_for('index'))
-        username = flask.request.form['username']
-        add_user(username)
+        password = password_hasher.hash(password)
+        add_user(username, password)
         flask.session['username'] = username
         return flask.redirect(flask.url_for('index'))
     return flask.render_template('new_user.html')
