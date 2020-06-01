@@ -15,17 +15,31 @@ function addButtonListeners() {
 function confirmNoAuth(){
     let username = document.querySelector("input#user").value
     let password = document.querySelector("input#password").value
-    data = new FormData()
-    data.append('username', username)
-    data.append('password', password)
+    let myForm = document.createElement('FORM')
+    let user = document.createElement('input')
+    user.name = "username"
+    user.value = username
+    let pass = document.createElement('input')
+    pass.name = "password"
+    pass.value = password
+    myForm.method = 'POST'
+    myForm.action = '/login/new'
+    myForm.appendChild(user)
+    myForm.appendChild(pass)
     if(password === '') {
         if(window.confirm("Are you sure you want to create this user with no password?")) {
-            return fetch('/login/new', {method: 'POST', body: data})
+            document.querySelector("body").appendChild(myForm)
+            myForm.submit()
+            document.querySelector("body").removeChild(myForm)
+            return
         }
         else {
         }
     }
     else {
-        return fetch('/login/new', {method: 'POST', body: data})
+            document.querySelector("body").appendChild(myForm)
+            myForm.submit()
+            document.querySelector("body").removeChild(myForm)
+            return
     }
 }

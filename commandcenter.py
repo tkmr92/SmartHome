@@ -5,10 +5,10 @@ import os
 from passlib.context import CryptContext
 import markupsafe
 
-logger = lib.Logger.Logger(__name__, "debug")
-app = flask.Flask(__name__)
-password_hasher = CryptContext(schemes='bcrypt')
-mongoclient = lib.Database.DatabaseInteraction()
+logger = lib.Logger.Logger(__name__, "debug")  # Initialize logging
+app = flask.Flask(__name__)  # Initialize Flask
+password_hasher = CryptContext(schemes='bcrypt')  # Initialize passlib
+mongo_client = lib.Database.DatabaseInteraction()  # Initialize database interaction
 
 logger.log("info", "flask started")
 
@@ -16,32 +16,48 @@ logger.log("info", "flask started")
 
 
 def get_users():
-    userlist = []
-    mongoclient.setdatabase('smarthome-db')
-    mongoclient.setcollection("People")
-    data = mongoclient.getcollection()
+    """
+    Helper function to get a list of users currently in the database.
+    Since several different pages in our webapp need to retrieve a list of users, this function will help keep
+    them more neat.
+
+    :return: user_list (type: list)
+
+    """
+    user_list = []
+    mongo_client.setdatabase('smarthome-db')
+    mongo_client.setcollection("People")
+    data = mongo_client.getcollection()
     new_users = data.find()
     for item in new_users:
-        userlist.append(item['name'])
-    return userlist
+        user_list.append(item['name'])
+    return user_list
 
 
-def add_user(username, password=None):
-    mongoclient.setdatabase('smarthome-db')
-    mongoclient.setcollection('People')
+def add_user(username, name, password=None):
+    """
+
+    :param name:
+    :param username:
+    :param password:
+    :return: None
+    """
+    mongo_client.setdatabase('smarthome-db')
+    mongo_client.setcollection('People')
     if password is None:
         data = {
             'name': username
         }
-        mongoclient.setdocument(data)
-        mongoclient.insertdocument()
+        mongo_client.setdocument(data)
+        mongo_client.insertdocument()
         return
     data = {
-        'name': username,
+        'username': username,
+        'name': name,
         'password': password
     }
-    mongoclient.setdocument(data)
-    mongoclient.insertdocument()
+    mongo_client.setdocument(data)
+    mongo_client.insertdocument()
     return
 
 # Vars #
@@ -49,8 +65,7 @@ def add_user(username, password=None):
 
 app.secret_key = os.urandom(32)
 navbar = {'Home': '', 'To Do': 'todo', 'Schedule': 'schedule', 'Shopping List': 'shopping',
-          'Change User': 'changeuser', "Log Out": 'logout'}
-userList = get_users()
+          'Change User': 'changeuser', 'Log Out' : 'logout'}
 
 # Flask Stuff #
 
@@ -65,40 +80,44 @@ def index(nav=navbar):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login(nav=navbar):
-    get_users()
+    user_list = get_users()
     if flask.request.method == 'POST':
-        flask.session['username'] = flask.request.form['username']
-        flask.session['password'] = flask.request.form['password']
-        if flask.session['username'] in userList:
-            return flask.redirect(flask.url_for('index'))
-        flask.redirect(flask.url_for('/login/new/<newuser>'))
+        user = flask.request.form['username'].lower()
+        password = flask.request.form['password']
+        # See if our user is already in our database
+        if user in user_list:
+            mongo_client.setdatabase('smarthome-db')
+            mongo_client.setcollection('People')
+            doc = mongo_client.getdocument({'name': user})
+            hashed_pass = doc['password']
+            # Verify the user input the correct password
+            if password_hasher.verify(password, hashed_pass):
+                flask.session['username'] = doc['name']
+                return flask.redirect(flask.url_for('index'))
+            return flask.redirect(flask.url_for('login_error', error='invalid_password'))
+        return flask.redirect(flask.url_for('login_error', error='invalid_user'))
     return flask.render_template('login.html')
 
 
 @app.route('/login/new',  methods=['GET', 'POST'])
 def newuser(nav=navbar):
     if flask.request.method == 'POST':
-        username = flask.request.form['username']
+        user_list = get_users()
+        username = flask.request.form['username'].lower()
+        if username in user_list:
+            return flask.redirect(flask.url_for('login_error', error='user_exists'))
+        name = flask.request.form['username']
         password = flask.request.form['password']
-        if password is '':
-            add_user(username)
-            flask.session['username'] = username
-            return flask.redirect(flask.url_for('index'))
         password = password_hasher.hash(password)
-        add_user(username, password)
-        flask.session['username'] = username
+        add_user(username, name, password)
+        flask.session['username'] = name
         return flask.redirect(flask.url_for('index'))
     return flask.render_template('new_user.html')
 
 
-@app.route('/login/new/<newuser>')
-def newuser_name(newuser, nav=navbar):
-    return flask.render_template('new_user.html', username=newuser)
-
-
-@app.route('/login_error')
-def login_error():
-    return flask.render_template('login_error.html')
+@app.route('/login/error/<error>')
+def login_error(error):
+    return flask.render_template('login_error.html', error=error)
 
 
 @app.route('/logout')
@@ -131,9 +150,9 @@ def shopping(nav=navbar):
 @app.route('/changeuser', methods=['GET', 'POST'])
 def change_user(nav=navbar):
     if 'username' in flask.session:
-        userlist = get_users()
+        user_list = get_users()
         if flask.request.method == 'POST':
             flask.session['username'] = flask.request.form['username']
             return flask.redirect(flask.url_for('index'))
-        return flask.render_template('changeuser.html', nav=nav, userlist=userlist, user=flask.session['username'])
+        return flask.render_template('changeuser.html', nav=nav, user_list=user_list, user=flask.session['username'])
     return flask.redirect(flask.url_for('login'))
